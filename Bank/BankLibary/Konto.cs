@@ -20,14 +20,14 @@
     public void Wplata(decimal kwota)
     {
         if (kwota <= 0)
-            throw new ArgumentException("Wpłata musi być większa niż 0.");
+            throw new ArgumentException("Kwota musi być dodatnia.");
 
-
-        if (zablokowane && bilans + kwota <= 0)
+        if (Zablokowane)
             throw new InvalidOperationException("Konto jest zablokowane.");
 
         bilans += kwota;
     }
+
 
 
     public void Wyplata(decimal kwota)

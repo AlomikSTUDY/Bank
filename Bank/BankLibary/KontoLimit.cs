@@ -26,10 +26,22 @@
 
     public void Wplata(decimal kwota)
     {
-        konto.Wplata(kwota);
-        if (konto.Bilans > 0)
-            konto.OdblokujKonto();
+        if (kwota <= 0)
+            throw new ArgumentException("Wpłata musi być większa niż 0.");
+
+        if (Zablokowane)
+        {
+            konto.WplataZablokowane(kwota); // <-- wpłata mimo blokady
+
+            if (konto.Bilans >= 0)
+                konto.OdblokujKonto();
+        }
+        else
+        {
+            konto.Wplata(kwota);
+        }
     }
+
 
     public void Wyplata(decimal kwota)
     {
@@ -48,4 +60,6 @@
         if (konto.Bilans < 0)
             konto.BlokujKonto();
     }
+
+
 }
